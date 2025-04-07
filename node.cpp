@@ -22,8 +22,19 @@ Node::Node(int val, Node *parent)
 
 Node::~Node()
 {
+    this->_children = -1;
     delete this->_left;
     delete this->_right;
+
+    if (this->parent() != nullptr){
+        if (this->parent()->left() == this)
+        this->parent()->left(nullptr);
+        else
+        this->parent()->right(nullptr);
+
+        
+        this->parent()->_refreshChildCount();
+    }
 }
 
 

@@ -84,10 +84,45 @@ Heaptree::~Heaptree()
     delete this->_root;
 }
 
-int Heaptree::pop()
+void Heaptree::pop()
 {
-    //to implement
-    return 0;
+    Node* ptr = this->_root;
+    if (ptr == nullptr) return;
+
+    //yanking the chain
+    while (!(ptr->left() == nullptr && ptr->right() == nullptr)){
+        //if at least one of them is nullptr...
+        if (ptr->left() == nullptr || ptr->right() == nullptr){
+            if (ptr->left() != nullptr){
+                ptr->value(ptr->left()->value());
+                ptr = ptr->left();
+            }
+            else
+            {
+                ptr->value(ptr->right()->value());
+                ptr = ptr->right();
+            }
+        }
+
+        //if they both have values
+        else{
+            //default yanking side to the left
+            Node* swap = ptr->left();
+
+            //check for a greater one
+            if (ptr->left() < ptr->right())
+                swap = ptr->right();
+
+            //if both values are equal, then compare the child count
+            if (ptr->left()->children() > ptr->right()->children())
+                swap = ptr->right();
+
+            //do the swap and move on
+            ptr->value(swap->value());
+            ptr = swap;
+        }
+    }
+    delete ptr;
 }
 
 int Heaptree::read()
@@ -124,11 +159,6 @@ void Heaptree::insert(int v)
 
         this->bubble(where, v);
     }
-}
-
-void Heaptree::skip()
-{
-    //to implement
 }
 
 void Heaptree::heapify()

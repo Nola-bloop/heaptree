@@ -22,9 +22,9 @@ public:
     Heaptree(/* args */);
     ~Heaptree();
 
-    /// @brief return the first value and delete it
+    /// @brief remove the top value from the tree
     /// @return the value that was removed
-    int pop();
+    void pop();
 
     /// @brief read the first value, but do not delete it
     /// @return the first value
@@ -33,10 +33,7 @@ public:
     /// @brief insert a value
     void insert(int);
 
-    /// @brief delete the first value, don't return it
-    void skip();
-
-    /// @brief rearrange the values
+    /// @brief redo the entire tree to make sure everything is in order.
     void heapify();
 
     /// @brief prints the tree's contents to the console
